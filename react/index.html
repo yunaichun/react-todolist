@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-framework="react">
+	<head>
+		<meta charset="utf-8">
+		<title>React.js • TodoMVC</title>
+		<link rel="stylesheet" href="./css/base.css">
+		<link rel="stylesheet" href="./css/index.css">
+		<script src="./js/lib/react.js"></script>
+		<script src="./js/lib/react-dom.js"></script>
+		<script src="./js/lib/babel.min.js"></script>
+	</head>
+	<body>
+		<section  id="AppRoot" class="todoapp"></section>
+        <footer class="info">
+			<p>Double-click to edit a todo</p>
+			<p>Written by <a href="https://github.com/ncyu1044173619/todoList">Naichun Yu</a></p>
+			<p>Refer to <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+        <script type="text/babel">
+            /**
+             * [todolist 数据]
+             * @type {Object}
+             */
+            var todolist = {
+                name: "todos",
+                todos: [{
+                    completed: false,
+                    title: 'finish exercise'
+                }, {
+                    completed: false,
+                    title: 'lean jsx'
+                }, {
+                    completed: true,
+                    title: 'lean react'
+                }]
+            };
+            /** 
+             * todo list 组件 
+             */
+            var TodoList = React.createClass({
+                render: function() {
+                    // 计算还有多少个未完成的
+                    var leftedTodo=todolist.todos.filter(function(todo){
+                        return !todo.completed;
+                    });
+                    var lefted=leftedTodo.length;
+                    return <div>
+                            <header className="header">
+                                <h1>{todolist.name}</h1>
+                                <input className="new-todo" placeholder="What needs to be done?" value=""/>
+                            </header>
+                            <section className="main">
+                                <input className="toggle-all" type="checkbox"/>
+                                <ul className="todo-list">
+                                    {todolist.todos.map(function(todo, i) {
+                                      var className = "";
+                                      if (todo.completed) {
+                                        className = "completed";
+                                      }
+                                      return <li className={className} key={i}>
+                                                <div className="view">
+                                                    <input className="toggle" type="checkbox" checked=""/>
+                                                    <label> {todo.title} </label>
+                                                    <button className="destroy"> </button>
+                                                </div>
+                                                <input type="text" className="edit" value={todo.title} />
+                                            </li>
+                                    })}
+                                </ul>
+                            </section>
+                            <footer className="footer">
+                                <span className="todo-count">
+                                    <strong> {lefted} </strong> <span> </span> <span> items </span> <span> left </span>
+                                </span>
+                                <ul className="filters">
+                                    <li> <a href="#/" className="selected"> All </a> </li>
+                                    <li> <a href="#/active" className=""> Active </a> </li> 
+                                    <li> <a href="#/completed" className=""> Completed </a> </li>
+                                </ul>
+                                <button className="clear-completed">
+                                    Clear completed
+                                </button>
+                            </footer>
+                          </div>;
+                }
+            });
+            /**
+             * render 到 DOM
+             * @type {String}
+             */
+            ReactDOM.render(
+              <TodoList name="World" />,
+              document.getElementById('AppRoot')
+            );
+        </script>
+		<script src="js/utils.js"></script>
+		<script src="js/todoModel.js"></script>
+		<script type="text/jsx" src="js/todoItem.jsx"></script>
+		<script type="text/jsx" src="js/footer.jsx"></script>
+		<script type="text/jsx" src="js/app.jsx"></script>
+	</body>
+</html>
