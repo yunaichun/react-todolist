@@ -1,0 +1,59 @@
+var webpack = require('webpack');
+
+module.exports={
+	entry:{
+		index:[
+		    "./css/base.css",
+		    "./css/index.css",
+		    "./js/main/util.js",
+			"./js/main/todoModel.js",
+			"./js/jsx/todoItem.jsx",
+			"./js/jsx/footer.jsx",
+			"./js/jsx/app.jsx",
+		],
+		//第三方业务代码
+		vendor:[
+			"./js/lib/react.js",
+			"./js/lib/react-dom.js",
+			"./js/lib/babel.min.js"
+		]
+	},
+	output:{
+		path:"/dist/",
+		filename:"[name].js",
+		//webpack-dev-server，修改后的内容会重新打包
+		publicPath:"/dist"
+	},
+	module:{
+		loaders:[
+			{
+				test:/\.js$/,
+				exclude:'./node_modules/',
+				loader:'babel-loader',
+				query:{
+					presets:['es2015','stage-0','react']
+				}
+			},
+			{
+				test:/\.css$/,
+				exclude:'./node_modules/',
+				//感叹号和数组表示管道符
+				loader:'style-loader!css-loader'
+			}
+		]
+	},
+	plugins:[
+	    //分离第三方业务代码
+	    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
+		//热加载
+		new webpack.HotModuleReplacementPlugin()
+	],
+	devServer:{
+		//启动目录
+		contentBase: "/",
+		//自动刷新
+		inline:true,
+		//webpack-dev-server，修改后的内容会重新打包
+		hot:true,
+	}
+};
