@@ -10,8 +10,24 @@ var config = {
     },
     module: {
         rules: [ 
+            //http://stackoverflow.com/questions/41472965/issue-while-migrating-from-webpack-1-x-to-webpack-2-x-no-eslint-configuration-f
             {
                 test: /\.js$/,
+                enforce: 'pre',
+                loader: 'eslint-loader',
+                exclude: /node_modules/,
+                options: {
+                    emitWarning: true,
+                    emitError: true,
+                    //failOnWarning: false,
+                    //failOnError: true,
+                    useEslintrc: false,
+                    // configFile: path.join(__dirname, ".eslintrc")
+                    configFile: './.eslintrc'
+                }
+            },
+            {
+                test: /\.js$/,   
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
@@ -26,17 +42,7 @@ var config = {
         ]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
-        new webpack.LoaderOptionsPlugin({
-            test: /\.js$/, 
-            loader: 'eslint-loader', 
-            exclude: /node_modules/,
-            options:{
-                eslint: {
-                    configFile: './.eslintrc'
-                }
-            }
-        })
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' })
     ],
 };
 /**
