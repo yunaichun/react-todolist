@@ -1,59 +1,60 @@
 var webpack = require('webpack');
-
-module.exports={
-	entry:{
-		index:[
-		    "./css/base.css",
-		    "./css/index.css",
-		    "./js/main/util.js",
-			"./js/main/todoModel.js",
-			"./js/jsx/todoItem.jsx",
-			"./js/jsx/footer.jsx",
-			"./js/jsx/app.jsx",
-		],
-		//第三方业务代码
-		vendor:[
-			"./js/lib/react.js",
-			"./js/lib/react-dom.js",
-			"./js/lib/babel.min.js"
-		]
-	},
-	output:{
-		path:"/dist/",
-		filename:"[name].js",
-		//webpack-dev-server，修改后的内容会重新打包
-		publicPath:"/dist"
-	},
-	module:{
-		loaders:[
-			{
-				test:/\.js$/,
-				exclude:'./node_modules/',
-				loader:'babel-loader',
-				query:{
-					presets:['es2015','stage-0','react']
-				}
-			},
-			{
-				test:/\.css$/,
-				exclude:'./node_modules/',
-				//感叹号和数组表示管道符
-				loader:'style-loader!css-loader'
-			}
-		]
-	},
-	plugins:[
-	    //分离第三方业务代码
-	    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
-		//热加载
-		new webpack.HotModuleReplacementPlugin()
-	],
-	devServer:{
-		//启动目录
-		contentBase: "/",
-		//自动刷新
-		inline:true,
-		//webpack-dev-server，修改后的内容会重新打包
-		hot:true,
-	}
+const glob = require('glob');
+var config = {
+    entry: {
+        vendor: ['react', 'react-dom']
+    },
+    output: {
+        path: __dirname + '/dist/js/',
+        filename: '[name].js'
+    },
+    module: {
+        rules: [ 
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015', 'stage-0', 'react']
+                }
+            },
+            {
+                test:/\.css$/,
+                exclude:/node_modules/,
+                loader:'style-loader!css-loader'
+            }
+        ]
+    },
+    plugins: [
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
+        new webpack.LoaderOptionsPlugin({
+            test: /\.js$/, 
+            loader: 'eslint-loader', 
+            exclude: /node_modules/,
+            options:{
+                eslint: {
+                    configFile: './.eslintrc'
+                }
+            }
+        })
+    ],
 };
+/**
+ * find entries
+ */
+var files = glob.sync('./src/js/*/index.js');
+var newEntries = files.reduce(function(previousValue, currentValue) {
+    /*如果 exec() 找到了匹配的文本，则返回一个结果数组。此数组的第 0 个元素是与正则表达式相匹配的文本*/
+    /*.*匹配最长的，.*?匹配最短的(非贪婪匹配)*/
+    var name = /.*\/(.*?)\/index\.js/.exec(currentValue)[1];
+    previousValue[name] = entry(name);
+    return previousValue;
+}, {});
+config.entry = Object.assign({}, config.entry, newEntries);
+/**
+ * [返回完整具体文件夹名称]
+ */
+function entry(name) {
+    return './src/js/' + name + '/index.js';
+}
+module.exports = config;

@@ -1,0 +1,11 @@
+/**
+ * before
+ */
+body {
+  background: white;
+  color: #333;
+  -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+  display: -ms-flexbox;
+  display: flex;
+}
