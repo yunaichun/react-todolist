@@ -8,42 +8,29 @@ var gutil = require('gulp-util');
 
 //启动build之前，需要先清理之前的build
 var del = require('del');
-var rename = require('gulp-rename');
-
 //增量编译
 var cached = require('gulp-cached');
-var remember = require('gulp-remember');
 //less文件处理
 var less = require('gulp-less');
 //css兼容性补全
 var autoprefixer = require('gulp-autoprefixer');
 
-
+//将webpack作为gulp的任务导入
+var webpackConfig = require('./webpack.config.js');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var webpackConfig = require('./webpack.config.js');
+var devConfig = Object.create(webpackConfig);
+var devCompiler = webpack(devConfig);
 
-
-//代码自动刷新
-var connect = require('gulp-connect');
-//实现rest接口的数据mock
-var rest = require('connect-rest');
-//mock数据接口
-var mocks = require('./mocks');
 
 /**
- * ----------------------------------------------------
- * source configuration
- * ----------------------------------------------------
+ * source dir
  */
 var src = {
-  // html 文件
-  html: 'src/html/*.html',  
-  // style 目录下所有 xx/index.less
-  style: 'src/style/*/index.less',                 
-  // 图片等应用资源
+  root: 'src/',
+  html: 'src/*.html',  
+  style: 'src/style/*/*.less',                 
   assets: 'assets/**/*',                         
-  // vendor 目录和 bower_components
   vendor: ['vendor/**/*', 'bower_components/**/*']                        
 };
 var dist = {
@@ -52,13 +39,6 @@ var dist = {
   style: 'dist/style',
   assets: 'dist/assets',
   vendor: 'dist/vendor'
-};
-var bin = {
-  root: 'bin/',
-  html: 'bin/',
-  style: 'bin/style',
-  assets: 'bin/assets',
-  vendor: 'bin/vendor'
 };
 
 
@@ -70,31 +50,21 @@ var bin = {
 /**
  * clean build dir
  */
-function clean(done) {
+function cleanBuild(done) {
   del.sync(dist.root);
   done();
 }
-
 /**
- * clean build binDir
+ * [html 将最新html文件copy到dist目录]
  */
-function cleanBin(done) {
-  del.sync(bin.root);
-  done();
-}
-
-/**
- * [html 将最新html文件 build]
- */
-function html() {
+function copyHtml() {
     return gulp.src(src.html)
       .pipe(gulp.dest(dist.html));
 }
-
 /**
- * [style description]
+ * [style 将最新less文件copy到dist目录]
  */
-function style() {
+function compileStyle() {
     return gulp.src(src.style)
       //和newer类似，过滤出改变了的style
       .pipe(cached('style'))
@@ -108,7 +78,7 @@ function style() {
       }))
       .pipe(gulp.dest(dist.style));
 }
-exports.style = style;
+exports.compileStyle = compileStyle;
 /**
  * [handleError less编译错误回调函数]
  */
@@ -122,7 +92,7 @@ function handleError(err) {
 }
 
 /**
- * [copyVendor 将最新vender文件 build]
+ * [copyVendor 将最新vender文件copy到dist目录]
  */
 function copyVendor() {
   return gulp.src(src.vendor)
@@ -130,37 +100,22 @@ function copyVendor() {
 }
 
 /**
- * [copyAssets 将最新assets文件 build]
+ * [copyAssets 将最新assets文件copy到dist目录]
  */
 function copyAssets() {
   return gulp.src(src.assets)
     .pipe(gulp.dest(dist.assets));
 }
 
-/**
- * [copyDist 将build目录拷贝到bin目录]
- */
-function copyDist() {
-  return gulp.src(dist.root + '**/*')
-    .pipe(gulp.dest(bin.root));
-}
-
-
-
 
 
 /**
- * [webpackDevelopment]
+ * [将webpack导入到gulp，作为其中一项默认任务]
  */
-var devConfig, devCompiler;
-devConfig = Object.create(webpackConfig);
-devConfig.devtool = 'sourcemap';
-devCompiler = webpack(devConfig);
-function webpackDevelopment(done) {
+function webpackTask(done) {
   devCompiler.run(function(err, stats) {
     if (err) {
         throw new gutil.PluginError('webpack:build-dev', err);
-        return;
     }
     gutil.log('[webpack:build-dev]', stats.toString({
         colors: true
@@ -168,109 +123,33 @@ function webpackDevelopment(done) {
     done();
   });
 }
-
 /**
- * [webpackProduction]
- * production 任务中添加了压缩和打包优化组件，且没有 sourcemap
+ * [启动webpack-dev-server服务]
  */
-function webpackProduction(done) {
-  var config = Object.create(webpackConfig);
-  config.plugins = config.plugins.concat(
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': 'production'
-      }
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin()
-  );
-  webpack(config, function(err, stats) {
-    if(err) throw new gutil.PluginError('webpack:build', err);
-    gutil.log('[webpack:production]', stats.toString({
-      colors: true
-    }));
-    done();
-  });
-}
-/**
- * [webpack-devServer]
- */
-devConfig.plugins = devConfig.plugins || [];
-devConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
-function webpackDevelopmentServer(done) {
-  new WebpackDevServer(devCompiler, {
-      contentBase: dist.root,
-      lazy: false,
-      hot: true
-  }).listen(8080, 'localhost', function (err) {
-      if (err) throw new gutil.PluginError('webpack-dev-server', err);
+function webpackDevServer(done) {
+  new WebpackDevServer(devCompiler).listen(8080, 'localhost', function (err) {
+      if (err){
+        throw new gutil.PluginError('webpack-dev-server', err);
+      } 
       gutil.log('[webpack-dev-server]', 'http://localhost:8080/');
-      reload();
       done();
   });
 }
 
 /**
- * [connectServer 代码自动刷新]
- */
-function connectServer(done) {
-  connect.server({
-      root: dist.root,
-      port: 8080,
-      livereload: true,
-      middleware: function(connect, opt) {
-        return [rest.rester({
-          context: '/'
-        })];
-      }
-  });
-  //通过 connect-rest 模块实现 rest 接口的数据 mock。
-  mocks(rest);
-  done();
-}
-
-/**
- * [watch 代码监控]
+ * [watch 代码更新重新打包]
  */
 function watch() {
-  gulp.watch(src.html, html);
-  gulp.watch('src/**/*.js', webpackDevelopment);
-  gulp.watch('src/**/*.less', style);
-  gulp.watch('dist/**/*').on('change', function(file) {
-      gulp.src('dist/')
-          .pipe(connect.reload());
-  });
-}
-/**
- * [reload 实现刷新]
- */
-function reload() {
-  connect.reload();
-}
-
+  gulp.watch(src.html, copyHtml);
+  gulp.watch(src.style, compileStyle);
+  gulp.watch(['src/**/*.js','src/**/*.jsx'], webpackTask);
+}  
 /**
  * default task
- *清空
- *并行：复制assets、vender、html、style
- *启动服务、rest接口数据mock
- *监听
  */
 gulp.task('default', gulp.series(
-  clean, 
-  gulp.parallel(copyAssets, copyVendor, html, style, webpackDevelopment), 
-  connectServer, 
+  cleanBuild, 
+  gulp.parallel(copyHtml, compileStyle, copyAssets, copyVendor, webpackTask),
+  webpackDevServer, 
   watch
-));
-/** 
- * production build task
- */
-gulp.task('build', gulp.series(
-  clean, 
-  gulp.parallel(copyAssets, copyVendor, html, style, webpackProduction), 
-  cleanBin, 
-  copyDist, 
-  function(done) {
-    console.log('build success');
-    done();
-  }
 ));

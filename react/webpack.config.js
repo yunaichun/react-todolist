@@ -1,12 +1,20 @@
 var webpack = require('webpack');
-const glob = require('glob');
 var config = {
     entry: {
-        vendor: ['react', 'react-dom']
+        vendor: ['react', 'react-dom'],
+        util:['./src/js/common/util.js'],
+        index:[
+            './src/js/index/index.js',
+            './src/js/index/components/todoItem.jsx',
+            './src/js/index/components/footer.jsx',
+            './src/js/index/components/app.jsx'
+        ]
     },
     output: {
         path: __dirname + '/dist/js/',
-        filename: '[name].js'
+        filename: '[name].js',
+        //webpack-dev-server，修改后的内容会重新打包
+        /*publicPath:'./dist/'*/
     },
     module: {
         rules: [ 
@@ -29,38 +37,32 @@ var config = {
             {
                 test: /\.js$/,   
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
+                loader: 'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react',
+                /*options: {
                     presets: ['es2015', 'stage-0', 'react']
-                }
+                }*/
             },
             {
                 test:/\.css$/,
                 exclude:/node_modules/,
-                loader:'style-loader!css-loader'
+                loader:'style-loader!css-loader?modules'
             }
         ]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' })
+        //热加载
+        new webpack.HotModuleReplacementPlugin(),
+        //第三方代码库
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
     ],
+    devServer: {
+        //启动目录
+        contentBase: './dist/',
+        //自动刷新
+        inline:true,
+        //webpack-dev-server，修改后的内容会重新打包
+        hot:true,
+    },
+    devtool: 'source-map',
 };
-/**
- * find entries
- */
-var files = glob.sync('./src/js/*/index.js');
-var newEntries = files.reduce(function(previousValue, currentValue) {
-    /*如果 exec() 找到了匹配的文本，则返回一个结果数组。此数组的第 0 个元素是与正则表达式相匹配的文本*/
-    /*.*匹配最长的，.*?匹配最短的(非贪婪匹配)*/
-    var name = /.*\/(.*?)\/index\.js/.exec(currentValue)[1];
-    previousValue[name] = entry(name);
-    return previousValue;
-}, {});
-config.entry = Object.assign({}, config.entry, newEntries);
-/**
- * [返回完整具体文件夹名称]
- */
-function entry(name) {
-    return './src/js/' + name + '/index.js';
-}
-module.exports = config;
+module.exports=config;
