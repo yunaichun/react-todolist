@@ -35,7 +35,7 @@ var config = {
                 }
             },
             {
-                test: /\.js$/,   
+                test: /\.jsx?$/,   
                 exclude: /node_modules/,
                 loader: 'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react',
                 /*options: {

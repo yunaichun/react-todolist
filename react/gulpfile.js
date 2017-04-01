@@ -31,7 +31,7 @@ var src = {
   html: 'src/*.html',  
   style: 'src/style/*/*.less',                 
   assets: 'assets/**/*',                         
-  vendor: ['vendor/**/*', 'bower_components/**/*']                        
+  vendor: ['src/js/vendor/**/*', 'src/js/bower_components/**/*']                        
 };
 var dist = {
   root: 'dist/',
