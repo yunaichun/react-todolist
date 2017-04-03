@@ -1,33 +1,46 @@
 /**
- * [li 列表组件]
+ * [TodoItem 主要部分组件【属于view层】]
  */
 var app=app||{};
 (function(){
 	'use strict';
 	var ESCAPE_KEY = 27;
 	var ENTER_KEY = 13;
+
 	app.TodoItem=React.createClass({
-		getInintialState:function(){
-			if(this.props.editing){
-				return {
-					editText:this.props.todo.title
-				}
-			}
+		/**
+		 * [getInintialState 组件内部需要维护的状态，通过props获取设置在当前的state中去维护]
+		 * @return {[type]} [description]
+		 */
+		getInitialState: function () {
+			return {editText: this.props.todo.title};
 		},
+		/**
+		 * [render render中的this.props指的是组件外部维护的状态]
+		 */
 		render:function(){
-			<li className={classNames({
-					completed: this.props.todo.completed,
-					editing: this.props.editing
-				})}>
-				<div className="view">
-					<input className="toggle" type="checkbox" checked={this.props.todo.completed} onChange={this.props.onTogle} />
-					<label onDoubleClick={this.handleEdit}>
-						{this.props.todo.title}
-					</label>
-					<button className="destory" onClick={this.props.onDestory} />
-				</div>
-				<input ref="editField" className="edit" value={this.state.editText} onBlur={this.handleSubmit} onChange={this.handleChange} onKeyDown={this.handleKeyDown} />
-			</li>
+			return (
+				<li className={
+						this.props.todo.completed?"completed":" ",
+						this.props.editing?"editing": " "
+					}>
+					<div className="view">
+						<input className="toggle" type="checkbox" 
+						checked={this.props.todo.completed} 
+						onChange={this.props.onTogle} />
+						<label onDoubleClick={this.handleEdit}>
+							{this.props.todo.title}
+						</label>
+						<button className="destory" onClick={this.props.onDestory} />
+					</div>
+					<input ref="editField" className="edit" 
+					value={this.state.editText} 
+					onBlur={this.handleSubmit} 
+					onChange={this.handleChange} 
+					onKeyDown={this.handleKeyDown} 
+					/>
+				</li>
+			);
 		},
 		/**
 		 * [handleChange change事件：改变状态]
@@ -88,11 +101,11 @@ var app=app||{};
 			//true的话就渲染
 			return true;
 			*/
-		    return {
+		    return (
 		    	nextProps.todo !== this.props.todo ||
 		    	nextProps.editing !== this.props.editing ||
 		    	nextState.editText !== this.state.editText
-		    }
+		    );
 		},
 		/**
 		 * [componentWillUpdate 事件：决定了渲染，render之前]
