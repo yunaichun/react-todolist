@@ -1,6 +1,6 @@
 # 简介
 工作前通过[todomvc官网](http://todomvc.com/)学习Vue.js、React.js、Angular.js，通过练习去发现这三个框架的相同点和不同点，还在学习中。
-工作后第一个项目用vue完全搭建前端项目：[在线选房地址](https://gitee.com/HangZhouFangLv/choose-online-webAdmin)【代码托管在码云平台上，内部开源项目……】
+工作后第一个项目用vue完全搭建前端项目：[在线选房源码地址](https://gitee.com/HangZhouFangLv/choose-online-webAdmin)【代码托管在码云平台上，内部开源项目……】
 
 
 ## Vue.js篇
