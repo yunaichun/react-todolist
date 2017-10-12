@@ -1,8 +1,7 @@
 # 简介
-使用Vue.js、Angular.js、React.js实现todoList功能。
-参考[todomvc官网](http://todomvc.com/)，其中页面css样式布局直接使用参考网站的源码，js部分自己完成。
+工作前通过[todomvc官网](http://todomvc.com/)学习Vue.js、React.js、Angular.js，通过练习去发现这三个框架的相同点和不同点，还在学习中。
+工作后第一个项目用vue完全搭建前端项目：[在线选房地址](https://gitee.com/HangZhouFangLv/choose-online-webAdmin)【代码托管在码云平台上，内部开源项目……】
 
-主要是通过练习熟悉这三个框架的常用接口API以及他们之间的区别，后续会继续总结补充。
 
 ## Vue.js篇
 入门Vue.js，先后看了[官方文档【参考】](http://cn.vuejs.org/v2/guide/installation.html)，[慕课网-Vue.js入门基础](http://www.imooc.com/learn/694)，[Vue.js菜鸟教程](http://www.runoob.com/vue2/vue-tutorial.html)
