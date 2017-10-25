@@ -4,7 +4,8 @@
 
 
 ## Vue.js篇
-入门Vue.js，先后看了[官方文档【参考】](http://cn.vuejs.org/v2/guide/installation.html)，[慕课网-Vue.js入门基础](http://www.imooc.com/learn/694)，[Vue.js菜鸟教程](http://www.runoob.com/vue2/vue-tutorial.html)
+最初学习参考了：[慕课网-Vue.js入门基础](http://www.imooc.com/learn/694)，[慕课网-Vue.js入门基础](http://www.imooc.com/learn/694)，[Vue.js菜鸟教程](http://www.runoob.com/vue2/vue-tutorial.html)。<br>
+后续一直在跟进官网：[官方文档-Vue地址](https://cn.vuejs.org/v2/guide/installation.html)、[官方文档-VueRouter地址](https://router.vuejs.org/zh-cn/)、[官方文档-Vuex地址](https://vuex.vuejs.org/zh-cn/)。
 
 Vue.js实现todolist功能主要用到以下API
 - el
@@ -25,11 +26,12 @@ vue页面元素用到以下元素
 - 自定义指令
 
 ## React.js篇
-入门React.js，先后看了[官方中文文档【参考】](http://reactjs.cn/react/docs/getting-started-zh-CN.html)，[React.js菜鸟教程](http://www.runoob.com/react/react-tutorial.html)，[阮一峰-React 入门实例教程](http://www.ruanyifeng.com/blog/2015/03/react.html)，[陈学家-精益React学习指南](https://zhuanlan.zhihu.com/p/21107252)，[阮一峰-Babel 入门教程](http://www.ruanyifeng.com/blog/2016/01/babel.html)
+最初学习参考了：[React.js菜鸟教程](http://www.runoob.com/react/react-tutorial.html)，[阮一峰-React 入门实例教程](http://www.ruanyifeng.com/blog/2015/03/react.html)，[陈学家-精益React学习指南](https://zhuanlan.zhihu.com/p/21107252)，[阮一峰-Babel 入门教程](http://www.ruanyifeng.com/blog/2016/01/babel.html)。<br>
+后续一直在跟进官网：[官方文档-React地址](https://reactjs.org/docs/hello-world.html)，[官方文档-ReactRouter地址](https://reacttraining.com/react-router/web/guides/philosophy)，[官方文档-ReactRedux地址](http://redux.js.org/)。
 
 
 
 ## Angular.js篇
-入门Angular.js，先后看了[官方中文文档【参考】](https://angular.cn/docs/ts/latest/)，[慕课网-AngularJS实战](http://www.imooc.com/learn/156)，[Angular.js菜鸟教程](http://www.runoob.com/angularjs/angularjs-tutorial.html)
+最初学习参考了：[慕课网-AngularJS实战](http://www.imooc.com/learn/156)，[Angular.js菜鸟教程](http://www.runoob.com/angularjs/angularjs-tutorial.html)
 
 
