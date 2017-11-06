@@ -30,6 +30,30 @@ npm run build --report
 [React.js菜鸟教程](http://www.runoob.com/react/react-tutorial.html)，[阮一峰-React 入门实例教程](http://www.ruanyifeng.com/blog/2015/03/react.html)，[陈学家-精益React学习指南](https://zhuanlan.zhihu.com/p/21107252)，[阮一峰-Babel 入门教程](http://www.ruanyifeng.com/blog/2016/01/babel.html)。<br>
 [官方文档-React地址](https://reactjs.org/docs/hello-world.html)，[官方文档-ReactRouter地址](https://reacttraining.com/react-router/web/guides/philosophy)，[官方文档-ReactRedux地址](http://redux.js.org/)。
 
+### webpack配置react项目
+``` bash
+# ES6->ES5
+yarn  add  babel-core babel-preset-es2015  babel-preset-stage-3 --dev
+
+# JSX&React
+yarn  add  babel-loader babel-preset-react --dev
+
+# style-loader&css-loader&less-loader&postcss-loader&autoprefixer
+yarn  add  style-loader css-loader less less-loader postcss-loader autoprefixer --dev
+
+# webpack&webpack-dev-server&react-hot-loader
+yarn  add  webpack webpack-dev-server react-hot-loader --dev
+
+# react&eact-router-dom&redux&react-redux
+yarn  add  webpack webpack-dev-server react-hot-loader --dev
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+```
+
 ### 引入React-Redex：从Redux Store中获取数据渲染到React组件中。
 - createStore初始化不可变应用状态Redux Store；
 - Provider将Redux Store与Component连接；
@@ -52,6 +76,6 @@ npm run build --report
 
 
 ## Angular.js学习篇
-最初学习参考了：[慕课网-AngularJS实战](http://www.imooc.com/learn/156)，[Angular.js菜鸟教程](http://www.runoob.com/angularjs/angularjs-tutorial.html)
+[慕课网-AngularJS实战](http://www.imooc.com/learn/156)，[Angular.js菜鸟教程](http://www.runoob.com/angularjs/angularjs-tutorial.html)
 
 

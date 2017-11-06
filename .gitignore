@@ -1,8 +1,4 @@
 .DS_Store
-
-
 /vue/node_modules/
-/vue/dist/
-
-
 /react/node_modules/
+/newreact/node_modules/
