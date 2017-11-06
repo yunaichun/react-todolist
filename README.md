@@ -1,13 +1,13 @@
 # 简介
-参考[todomvc官网](http://todomvc.com/)，利用vue和react分别实现ToDoList功能。
-工作后第一个项目用vue完全搭建前端项目：[在线选房源码地址](https://gitee.com/HangZhouFangLv/choose-online-webAdmin)【代码托管在码云平台上，内部开源项目】
+参考[todomvc官网](http://todomvc.com/)，利用vue和react分别实现ToDoList功能。</br>
+工作后第一个项目用vue完全搭建：[在线选房源码地址](https://gitee.com/HangZhouFangLv/choose-online-webAdmin)【代码托管在码云平台上，内部开源项目】
 
 
-## Vue.js篇
+## Vue.js
 [慕课网-Vue.js入门基础](http://www.imooc.com/learn/694)，[慕课网-Vue.js入门基础](http://www.imooc.com/learn/694)，[Vue.js菜鸟教程](http://www.runoob.com/vue2/vue-tutorial.html)。<br>
 [官方文档-Vue地址](https://cn.vuejs.org/v2/guide/installation.html)、[官方文档-VueRouter地址](https://router.vuejs.org/zh-cn/)、[官方文档-Vuex地址](https://vuex.vuejs.org/zh-cn/)。
 
-### vue-cli项目搭建
+### vue-cli项目初始化
 ``` bash
 # initial directory
 vue init webpack my-project
@@ -26,7 +26,7 @@ npm run build --report
 ```
 
 
-## React.js篇
+## React.js
 [React.js菜鸟教程](http://www.runoob.com/react/react-tutorial.html)，[阮一峰-React 入门实例教程](http://www.ruanyifeng.com/blog/2015/03/react.html)，[陈学家-精益React学习指南](https://zhuanlan.zhihu.com/p/21107252)，[阮一峰-Babel 入门教程](http://www.ruanyifeng.com/blog/2016/01/babel.html)。<br>
 [官方文档-React地址](https://reactjs.org/docs/hello-world.html)，[官方文档-ReactRouter地址](https://reacttraining.com/react-router/web/guides/philosophy)，[官方文档-ReactRedux地址](http://redux.js.org/)。
 
@@ -51,7 +51,7 @@ npm run build --report
 - postcss-loader+autoprefixer
 
 
-## Angular.js篇
+## Angular.js学习篇
 最初学习参考了：[慕课网-AngularJS实战](http://www.imooc.com/learn/156)，[Angular.js菜鸟教程](http://www.runoob.com/angularjs/angularjs-tutorial.html)
 
 
