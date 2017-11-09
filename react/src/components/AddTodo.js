@@ -16,7 +16,8 @@ export default class AddTodo extends React.Component {
       if (!this.state.value) { //没有输入直接回车情况
           return;
       }
-      this.props.onAddClick(this.state.value);
+      //直接调用action_creators.js的方法
+      this.props.addTodo(this.state.value);
       this.setState({
         value: ''
       });
@@ -29,6 +30,7 @@ export default class AddTodo extends React.Component {
     });
   }
   render() {
+    console.log(this.props);
     return (
       <div className="header">
         <h1>todos</h1>

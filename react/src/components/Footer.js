@@ -16,7 +16,8 @@ export default class Footer extends React.Component {
   //点击事件
   handleClick(e) {
     e.preventDefault();
-    this.props.onFilterChange(e.target.name);
+    //直接调用action_creators.js的方法
+    this.props.setVisibilityFilter(e.target.name);
   }
   //渲染顶部组件
   renderFilter(filter, name) {
@@ -25,7 +26,7 @@ export default class Footer extends React.Component {
         <a 
           href='/' 
           name={filter}
-          className={filter === this.props.filter ? 'selected' : ' '}
+          className={filter === this.props.visibilityFilter ? 'selected' : ' '}
           onClick={this.handleClick}
         >
         {name}

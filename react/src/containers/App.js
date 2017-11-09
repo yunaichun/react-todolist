@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 //引入常量
-import { addTodo, toggleCompleteTodo, setVisibilityFilter } from '../actions/index';
+import * as actionCreators from '../actions/index';
 //添加组件
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
@@ -14,29 +14,12 @@ import '../styles/index.less';
 class App extends React.Component {
   render() {
     // Injected by connect() call:
-    const { dispatch, visibleTodos, visibilityFilter, remainingCount } = this.props;
-    console.log(this.props);
-
+    //console.log(this.props);
     return (
       <div className="todoapp">
-        <AddTodo
-          onAddClick={text =>
-            dispatch(addTodo(text))
-          } 
-        />
-        <TodoList
-          todos={visibleTodos}
-          onToggleCompleteTodoClick={todo =>
-            dispatch(toggleCompleteTodo(todo))
-          } 
-        />
-        <Footer
-          filter={visibilityFilter}
-          remainingCount={remainingCount}
-          onFilterChange={nextFilter =>
-            dispatch(setVisibilityFilter(nextFilter))
-          } 
-        />
+        <AddTodo {...this.props} />
+        <TodoList {...this.props} />
+        <Footer {...this.props} />
       </div>
     );
   }
@@ -72,5 +55,6 @@ function mapStateToProps(state) {
 
 // 包装 component：注入 dispatch 和 state 到其默认的 connect(mapStateToProps)(App) 中；
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  actionCreators
 )(App);

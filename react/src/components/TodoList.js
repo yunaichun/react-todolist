@@ -11,11 +11,11 @@ export default class TodoList extends React.Component {
          type="checkbox" 
         />
         <ul className="todo-list">
-          {this.props.todos.map((todo, index) =>
+          {this.props.visibleTodos.map((todo, index) =>
             <Todo 
                 {...todo}
                 key={index}
-                onClick={() => this.props.onToggleCompleteTodoClick(todo)} 
+                onClick={() => this.props.toggleCompleteTodo(todo)} 
             />
           )}
         </ul>
