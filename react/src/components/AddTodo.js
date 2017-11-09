@@ -30,7 +30,6 @@ export default class AddTodo extends React.Component {
     });
   }
   render() {
-    console.log(this.props);
     return (
       <div className="header">
         <h1>todos</h1>

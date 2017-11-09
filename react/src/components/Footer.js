@@ -36,7 +36,7 @@ export default class Footer extends React.Component {
   }
   render() {
     return (
-      <div className="footer">
+      <div className="footer" style={{ display: this.props.todos.length === 0 ? 'none' : 'block' }} >
         <span className="todo-count">
           <strong>{this.props.remainingCount} </strong>{this.getStrItem()} left
         </span>
@@ -45,6 +45,13 @@ export default class Footer extends React.Component {
           {this.renderFilter('SHOW_COMPLETED', 'Completed')}
           {this.renderFilter('SHOW_ACTIVE', 'Active')}
         </ul>
+        <button 
+          className="clear-completed"
+          style={{ display: this.props.todos.length > this.props.remainingCount ? 'block' : 'none' }}
+          onClick={() => this.props.deleteCompletedTodos()}
+        >
+          Clear completed
+        </button>
       </div>
     );
   }

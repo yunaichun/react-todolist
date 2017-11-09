@@ -44,6 +44,7 @@ function getRemainingCount(todos) {
 // Note: use https://github.com/faassen/reselect for better performance.
 function mapStateToProps(state) {
   return {
+    todos: state.todos,
     //当前显示条目：全部state.todos + 过滤条件【'SHOW_ALL'、'SHOW_COMPLETED'、'Completed'】 
     visibleTodos: selectTodos(state.todos, state.visibilityFilter),
     //返回过滤条件：'SHOW_ALL'、'SHOW_COMPLETED'、'Completed'
