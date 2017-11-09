@@ -54,6 +54,17 @@ export default (state = [], action) => {
         } 
         return newState;
       }
+    case 'EDIT_TODO': //编辑条目
+      {
+        const index = state.indexOf(action.todo);
+        return [
+          ...state.slice(0, index),
+          Object.assign({}, state[index], {
+            text: action.newText 
+          }),
+          ...state.slice(index + 1)
+        ];
+      }
     default://默认返回初始state
       return state;
   }

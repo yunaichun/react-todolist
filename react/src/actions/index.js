@@ -16,6 +16,9 @@ export function deleteTodo(todo) { //删除条目
 export function deleteCompletedTodos() { //删除全部条目
   return { type: 'DELETE_COMPLETED_TODO' };
 }
+export function editTodo(todo, newText) { //编辑条目
+  return { type: 'EDIT_TODO', todo, newText };
+}
 
 
 //设置过滤条件：'SHOW_ALL'、'SHOW_COMPLETED'、'Completed'【外部直接调用此方法传入一个参数即可】
