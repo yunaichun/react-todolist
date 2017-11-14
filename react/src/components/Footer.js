@@ -1,10 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Footer extends React.Component {
   constructor(props) {
     super(props);
-    //保证事件可以获取到this.props属性
-    this.handleClick = this.handleClick.bind(this);
   }
   //获取剩余条目【调用时候必须加括号，不加括号的事件需要bind(this)】
   getStrItem() {
@@ -13,24 +12,17 @@ export default class Footer extends React.Component {
     }
     return 'items';
   }
-  //点击事件
-  handleClick(e) {
-    e.preventDefault();
-    //直接调用action_creators.js的方法
-    this.props.setVisibilityFilter(e.target.name);
-  }
   //渲染顶部组件
   renderFilter(filter, name) {
     return (
       <li>
-        <a 
-          href='/' 
-          name={filter}
+        <Link
+          to={name === 'All' ? '' : name}
           className={filter === this.props.visibilityFilter ? 'selected' : ' '}
-          onClick={this.handleClick}
+          onClick={() => { this.props.setVisibilityFilter(filter); }}
         >
-        {name}
-        </a>
+          {name}
+        </Link>
       </li>
     );
   }
