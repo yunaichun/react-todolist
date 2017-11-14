@@ -42,7 +42,8 @@ function getRemainingCount(todos) {
 }
 // Which props do we want to inject, given the global state?
 // Note: use https://github.com/faassen/reselect for better performance.
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  console.log('ownProps', ownProps.match.params.filter);
   return {
     todos: state.todos,
     //当前显示条目：全部state.todos + 过滤条件【'SHOW_ALL'、'SHOW_COMPLETED'、'Completed'】 
