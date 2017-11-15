@@ -36,6 +36,9 @@ export default class Todo extends React.Component {
       });
     }
     if (event.which === 13) { //enter
+      if (!event.target.value.trim()) {
+        return;
+      }
       this.setState({
         editding: false
       });
@@ -47,6 +50,7 @@ export default class Todo extends React.Component {
     if (!event.target.value.trim()) {
       return;
     }
+    alert(1);
     this.setState({
       editding: false,
     });

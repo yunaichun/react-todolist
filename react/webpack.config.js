@@ -56,6 +56,8 @@ module.exports = {
 	},
 	devServer: {	
 		contentBase: './dist',	//--contentBase指定目录启动服务器的根目录
+		open: true, //自动打开浏览器
+		port: 9000, //设置端口
 		hot: true //服务器启动模块热替换【需要配置插件plugins】，不需要页面刷新
 	},
 	plugins: [	
