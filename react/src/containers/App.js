@@ -43,15 +43,16 @@ function getRemainingCount(todos) {
 // Which props do we want to inject, given the global state?
 // Note: use https://github.com/faassen/reselect for better performance.
 function mapStateToProps(state, ownProps) {
-  console.log('ownProps', ownProps.match.params.filter);
+  //console.log('state', state);
+  //console.log('ownProps', ownProps.match.params.filter);
   return {
-    todos: state.todos,
+    todos: state.todos.present,
     //当前显示条目：全部state.todos + 过滤条件【'SHOW_ALL'、'SHOW_COMPLETED'、'Completed'】 
-    visibleTodos: selectTodos(state.todos, state.visibilityFilter),
+    visibleTodos: selectTodos(state.todos.present, state.visibilityFilter),
     //返回过滤条件：'SHOW_ALL'、'SHOW_COMPLETED'、'Completed'
     visibilityFilter: state.visibilityFilter, 
     //求出剩余条数
-    remainingCount: getRemainingCount(state.todos)
+    remainingCount: getRemainingCount(state.todos.present)
   };
 } 
 
