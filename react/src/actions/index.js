@@ -19,10 +19,10 @@ export function deleteCompletedTodos() { //删除全部条目
 export function editTodo(todo, newText) { //编辑条目
   return { type: 'EDIT_TODO', todo, newText };
 }
-export function unDoTodos() { //backward
+export function undoTodo() { //backward
   return { type: 'UNDO' };
 }
-export function reDoTodo() { //forward
+export function redoTodo() { //forward
   return { type: 'REDO' };
 }
 

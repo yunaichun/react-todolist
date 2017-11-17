@@ -36,11 +36,17 @@ export default class Footer extends React.Component {
           {this.renderFilter('SHOW_ALL', 'All')}
           {this.renderFilter('SHOW_COMPLETED', 'Completed')}
           {this.renderFilter('SHOW_ACTIVE', 'Active')}
+          <li style={{ marginRight: 10 }}>
+          <button onClick={() => this.props.undoTodo()} disabled={!this.props.canUndo}>Undo</button>
+          </li>
+          <li>
+          <button onClick={() => this.props.redoTodo()} disabled={!this.props.canRedo}>Redo</button>
+          </li>
         </ul>
         <button 
           className="clear-completed"
           style={{ display: this.props.todos.length > this.props.remainingCount ? 'block' : 'none' }}
-          onClick={() => this.props.deleteCompletedTodos()}
+          onClick={() => this.props.undoTodo()}
         >
           Clear completed
         </button>

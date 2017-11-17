@@ -52,7 +52,11 @@ function mapStateToProps(state, ownProps) {
     //返回过滤条件：'SHOW_ALL'、'SHOW_COMPLETED'、'Completed'
     visibilityFilter: state.visibilityFilter, 
     //求出剩余条数
-    remainingCount: getRemainingCount(state.todos.present)
+    remainingCount: getRemainingCount(state.todos.present),
+    //历史记录的条数
+    canUndo: state.todos.past.length > 0,
+    //未来记录的条数
+    canRedo: state.todos.future.length > 0
   };
 } 
 
