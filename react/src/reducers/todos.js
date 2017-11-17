@@ -70,7 +70,7 @@ function todos(state = [], action) {
   }
 }
 
-function undoable(reducer) {
+function undoableTodos(reducer) {
   // 以一个空的 action 调用 reducer 来产生初始的 state
   const initialState = {
     past: [],
@@ -115,4 +115,13 @@ function undoable(reducer) {
 }
 //Reducer Enhancers类似combineReducers()，传入reducers，返回新的reducers
 //传的参数是一个函数，返回一个函数
-export default undoable(todos);
+export default undoableTodos(todos);
+
+
+/*  上述等效写法
+//这里的 distinctState() 过滤器会忽略那些没有引起 state 变化的 actions
+import undoable, { distinctState } from 'redux-undo'
+const undoableTodos = undoable(todos, {
+  filter: distinctState()
+}) 
+*/
