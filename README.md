@@ -1,6 +1,5 @@
 # 简介
 利用vue[vue-cli工具构建]和react[webpack配置]分别实现了ToDoList功能。样式copy[todomvc官网](http://todomvc.com/)</br>
-工作后第一个项目用vue完全搭建：[在线选房源码地址](https://gitee.com/HangZhouFangLv/choose-online-webAdmin)【代码托管在码云平台上，内部开源项目】
 
 
 ## Vue.js
